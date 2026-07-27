@@ -1,6 +1,6 @@
 import random
-from typing import NewType
 from dataclasses import dataclass
+from typing import NewType, TypedDict
 
 RGB = NewType("RGB", tuple[int, int, int])
 HSL = NewType("HSL", tuple[int, int, int])
@@ -20,7 +20,12 @@ class User:
     lastName: str
     email: str
     age: int | None
-    fav_color: RGB | None
+    fav_color: RGB | None = None
+
+
+class Student(TypedDict):
+    name: str
+    age: int
 
 
 def createUser(
@@ -43,19 +48,36 @@ def createUser(
     #     "fav_color": fav_color,
     # }
 
-#Generic Type
+
+# Generic Type
 def random_choice[T](items: list[T]) -> T:
     return random.choice(items)
 
 
+def getAge(students: dict[str, Student]) -> list[int]:
+    ageList: list[int] = []
+    for key in students:
+        ageList.append(students[key]["age"])
+    return ageList
+
+
 def type_hinting() -> None:
-    #Creating User
+    # Creating User
     user1 = createUser("John", "Doe", 27, RGB((101, 212, 211)))
     user2 = createUser("Shawn", "Dev", 27, RGB((150, 112, 191)))
 
-    #Accessing Random User
+    # Accessing Random User
     user = random_choice([user1, user2])
-    print(user)
+
+    # Accessing Nested Dictionary
+    ageList = getAge(
+        {
+            "studentA": {"name": "Akash", "age": 20},
+            "studentB": {"name": "Ayush", "age": 19},
+            "studentC": {"name": "Ben", "age": 21},
+        }
+    )
+    print(ageList)
 
 
 if __name__ == "__main__":

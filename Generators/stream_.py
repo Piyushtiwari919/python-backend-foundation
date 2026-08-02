@@ -5,6 +5,7 @@ load_dotenv()
 
 client = OpenAI()
 
+#Give Generator
 stream = client.responses.create(
     model="gpt-5.6",
     input=[

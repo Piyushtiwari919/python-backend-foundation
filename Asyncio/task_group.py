@@ -24,9 +24,9 @@ async def main_taskgroup():
             tg.create_task(failing_task())
             tg.create_task(safe_task())
 
-    except Exception as e:
-        print(f"Main caught error from TaskGroup.")
-        # TaskGroup wraps errors in an **ExceptionGroup in case multiple tasks fail at once 
+    except Exception as e:  # noqa: BLE001, F841
+        print("Main caught error from TaskGroup.")
+        # TaskGroup wraps errors in an **ExceptionGroup in case multiple tasks fail at once
 
 
 asyncio.run(main_taskgroup())

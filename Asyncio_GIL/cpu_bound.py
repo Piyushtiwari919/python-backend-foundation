@@ -1,4 +1,5 @@
 import asyncio
+from concurrent.futures import ProcessPoolExecutor
 
 
 def chunk_massive_document() -> int:
@@ -14,9 +15,12 @@ def chunk_massive_document() -> int:
 async def serve_user(id: int, cpuTask: bool) -> None:
     print(f"User: {id} requested")
     if cpuTask:
-        res = await asyncio.to_thread(chunk_massive_document)
+        loop = asyncio.get_running_loop()
+        executor = ProcessPoolExecutor(4)
+        res = await loop.run_in_executor(executor, chunk_massive_document)
         print(f"The output of User: {id} task is {res}")
         print(f"User: {id} request completed")
+        executor.shutdown()
     else:
         print(f"User: {id} requested a fast profile load.")
 

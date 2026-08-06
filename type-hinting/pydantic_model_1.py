@@ -120,6 +120,7 @@ post_data = {
 def pydantic_function():
     try:
         # User
+
         user = User(
             username="johndoe",
             email="john.doe@pydantic.com",
